@@ -1,0 +1,7 @@
+Yêu cầu:
+Học docker & docker-compse cơ bản
+viết 1 file docker-compose build odoo env
+Chạy Odoo custom image version 14 trong dockerfile
+Chạy postgres v12
+chạy trên port 80
+Không dùng nginx

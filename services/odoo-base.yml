@@ -1,0 +1,25 @@
+version: '3'
+services:
+  odoo:
+    image: odoo:14.0
+    container_name: odoo
+    volumes:
+      - odoo-data:/var/lib/odoo
+      - ../config:/etc/odoo
+      - ../odoo/extra:/mnt/extra-addons
+      - ../odoo/default:/mnt/default-addons
+      - ../odoo/addons:/mnt/addons
+      - ../odoo/themes:/mnt/themes
+      - ../odoo/hr:/mnt/hr
+      - ../odoo/websites:/mnt/websites
+      - ../odoo/sales:/mnt/sales
+      - ../odoo/social:/mnt/social
+      - ../odoo/im_livechat:/mnt/im_livechat
+      - ../odoo/accounts:/mnt/accounts
+      - ../odoo/analytic:/mnt/analytic
+      - ../odoo/l10n:/mnt/l10n
+      - ../odoo/payments:/mnt/payments
+      - ../odoo/education:/mnt/education
+      - ../odoo/mrp:/mnt/mrp
+      - ../odoo/stock:/mnt/stock
+      - ../odoo/barcodes:/mnt/barcodes

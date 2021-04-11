@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+  odoo: # the odoo web app
+    container_name: my_odoo
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - postgres_db
+    environment:
+      - HOST=postgres_db
+      - USER=odoo
+      - PASSWORD=odoo
+    ports: 
+      - "80:8069"
+    volumes: 
+      - ./addons:/mnt/extra-addons
+      - ./etc:/etc/odoo
+      - ./odoo:/var/lib/odoo
+
+  postgres_db:
+    image: postgres:12
+    container_name: postgres_db
+    environment:
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+      - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    restart: always             # run as a service
+    # volumes:
+    #   - pgdata:/var/lib/postgresql/data
+    #   - ./postgres:/var/lib/postgresql/data/
+    
+# volumes:
+#   pgdata:

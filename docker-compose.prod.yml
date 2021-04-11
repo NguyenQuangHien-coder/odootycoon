@@ -1,0 +1,23 @@
+version: '3'
+services:
+#extend service from odoo base
+  odoo:
+    extends:
+      file: ./services/odoo-base.yml
+      service: odoo
+    container_name: ${CLIENT_NAME}
+    depends_on:
+      - db
+    ports:
+      - "${APP_PORT}:8069"
+      
+#extend service from posgress base
+  db:
+    extends:
+      file: ./services/db-base.yml
+      service: db
+    container_name: ${CLIENT_NAME}-db
+#Define persistent volume
+volumes:
+  odoo-data:
+  odoo-db:

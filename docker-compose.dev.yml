@@ -1,0 +1,38 @@
+version: '3'
+services:
+#extend service from odoo base
+  odoo:
+    extends:
+      file: ./services/odoo-base.yml
+      service: odoo
+    container_name: ${CLIENT_NAME}
+    depends_on:
+      - db
+    ports:
+      - "${APP_PORT}:8069"
+    command: -- --dev=all
+    
+#extend service from posgress base
+  db:
+    extends:
+      file: ./services/db-base.yml
+      service: db
+    container_name: ${CLIENT_NAME}-db
+
+#extend service pg admin for developemt only  
+  pg-ui:
+    extends:
+      file: ./services/pg-admin.yml
+      service: pg-ui
+    container_name: ${CLIENT_NAME}-pg-ui
+
+#extend service debug for developemt only  
+  debug:
+    extends:
+      file: ./services/debug.yml
+      service: debug
+    container_name: ${CLIENT_NAME}-debug
+
+volumes:
+  odoo-data:
+  odoo-db:

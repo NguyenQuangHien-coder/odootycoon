@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Set environment variables for dev
+export APP_PORT=${APP_PORT:-8069}
+export CLIENT_NAME=${CLIENT_NAME:-DEMO-DEV}
+
+# Decide which docker-compose file to use
+COMPOSE_FILE="dev"
+
+# Create docker-compose command to run
+COMPOSE="docker-compose --project-name ${CLIENT_NAME} -f docker-compose.${COMPOSE_FILE}.yml"
+
+# Run docker-compose command to run
+$COMPOSE "$@"

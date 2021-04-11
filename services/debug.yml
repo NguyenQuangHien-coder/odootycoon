@@ -1,0 +1,7 @@
+version: '3'
+services:
+  debug:
+    image: kozea/wdb:3.2.5
+    container_name: debug
+    ports:
+      - "1984:1984"

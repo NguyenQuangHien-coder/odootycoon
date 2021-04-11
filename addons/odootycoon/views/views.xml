@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+<!-- action opening view on models -->
+    <record id="odootycoon.action_window" model="ir.actions.act_window">
+        <field name="name">Odoo Tycoon Game Manager</field>
+        <field name="res_model">odootycoon.gamemanager</field>
+        <field name="view_mode">free,form</field>
+    </record>
+
+<!-- top menu item -->
+        <menuitem name="Odoo Tycoon" id="odootycoon.menu_root"/>
+        <!-- MENU CATEGORIES -->
+        <menuitem name="Game" id="odootycoon.menu_1" parent="odootycoon.menu_root"/>
+        <!-- action (DROPDOWN)-->
+        <menuitem name="Game Manager" id="oodootycoon.menu_1_gamemanager" parent="odootycoon.menu_1"
+                    action="odootycoon.action_window" sequence="1"/>
+    </data>
+</odoo>
