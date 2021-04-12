@@ -1,19 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-<!-- action opening view on models -->
-    <record id="odootycoon.action_window" model="ir.actions.act_window">
-        <field name="name">Odoo Tycoon Game Manager</field>
-        <field name="res_model">odootycoon.gamemanager</field>
-        <field name="view_mode">free,form</field>
-    </record>
+        <!-- explicit list view definition -->
+        <record id="odootycoon_gamemanager_view" model="ir.ui.view">
+            <field name="name">Odootycoon Game Manager View</field>
+            <field name="model">odootycoon.gamemanager</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="name" />
+                    <field name="day" />
+                    <field name="cash" />
+                </tree>
+            </field>
+        </record>
 
-<!-- top menu item -->
-        <menuitem name="Odoo Tycoon" id="odootycoon.menu_root"/>
+        <!-- explicit form view definition (form of game manager)-->
+        <record id="odootycoon_gamemanager_form" model="ir.ui.view">
+            <field name="name">Odoo Tycoon Game Manager Form</field>
+            <field name="model">odootycoon.gamemanager</field>
+            <field name="arch" type="xml">
+                <from>
+                    <header>
+                        <buton name="nextday" string="Next Day" type="object" />
+                        <buton name="skip5days" string="Skip 5 Days" type="object" />
+                        <buton name="skip30days" string="Skip 30 Days" type="object" />
+                        <buton name="resetgame" string="Reset Game" type="object" />
+                    </header>
+                    <group>
+                        <field name="name" />
+                        <field name="day" />
+                        <field name="cash" />
+                    </group>
+                </from>
+            </field>
+        </record>
+
+        <!-- action opening view on models -->
+        <record id="action_window" model="ir.actions.act_window">
+            <field name="name">Odoo Tycoon Game Manager</field>
+            <field name="res_model">odootycoon.gamemanager</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- top menu item -->
+        <menuitem name="Odoo Tycoon" id="menu_root" />
         <!-- MENU CATEGORIES -->
-        <menuitem name="Game" id="odootycoon.menu_1" parent="odootycoon.menu_root"/>
+        <menuitem name="Game" id="menu_1" parent="menu_root" />
         <!-- action (DROPDOWN)-->
-        <menuitem name="Game Manager" id="oodootycoon.menu_1_gamemanager" parent="odootycoon.menu_1"
-                    action="odootycoon.action_window" sequence="1"/>
+        <menuitem name="Game Manager" id="menu_1_gamemanager" parent="menu_1" action="odootycoon.action_window" sequence="1" />
     </data>
 </odoo>
