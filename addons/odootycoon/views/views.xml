@@ -8,8 +8,8 @@
             <field name="arch" type="xml">
                 <tree default_order="create_date desc">
                     <field name="name" />
-                    <field name="day" />
                     <field name="cash" />
+                    <field name="day" />
                 </tree>
             </field>
         </record>
@@ -19,27 +19,53 @@
             <field name="name">Odoo Tycoon Game Manager Form</field>
             <field name="model">odootycoon.gamemanager</field>
             <field name="arch" type="xml">
-                <from>
+                <form>
                     <header>
-                        <buton name="nextday" string="Next Day" type="object" />
-                        <buton name="skip5days" string="Skip 5 Days" type="object" />
-                        <buton name="skip30days" string="Skip 30 Days" type="object" />
-                        <buton name="resetgame" string="Reset Game" type="object" />
+                        <button name="nextday" string="Next Day" type="object" />
+                        <button name="skip5days" string="Skip 5 Days" type="object" />
+                        <button name="skip30days" string="Skip 30 Days" type="object" />
+                        <button name="resetgame" string="Reset Game" type="object" />
                     </header>
                     <group>
                         <field name="name" />
-                        <field name="day" />
                         <field name="cash" />
+                        <field name="day" />
                     </group>
-                </from>
+                </form>
+            </field>
+        </record>
+        <!-- explicit form view definition (form of products)-->
+        <record id="odootycoon_producttemplate_form" model="ir.ui.view">
+            <field name="name">Odoo Tycoon Product</field>
+            <field name="model">product.template</field>
+            <!-- inherit from product form External ID -->
+            <field name="inherit_id" ref="product.product_template_only_form_view" />
+            <field name="arch" type="xml">
+                <!-- create new page inside the original page  -->
+                <notebook position="inside">
+                    <page string="Odoo Tycoon">
+                        <group>
+                            <field name="unlockcost" />
+                            <field name="unlocked" attrs="{'invisible': [('unlocked', '=', False)]}" />
+                            <!-- invisible when the product was unlocked -->
+                            <button name="unlockproduct" string="Unlock Product" type="object" attrs="{'invisible': [('unlocked', '=', True)]}" />
+                        </group>
+                    </page>
+                </notebook>
             </field>
         </record>
 
-        <!-- action opening view on models -->
-        <record id="action_window" model="ir.actions.act_window">
+        <!-- action opening view on models (gamemanager) -->
+        <record id="action_gamemanager" model="ir.actions.act_window">
             <field name="name">Odoo Tycoon Game Manager</field>
             <field name="res_model">odootycoon.gamemanager</field>
             <field name="view_mode">tree,form</field>
+        </record>
+        <!-- action opening view on models (products) -->
+        <record id="action_products" model="ir.actions.act_window">
+            <field name="name">Odoo Tycoon Products</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,tree,form</field>
         </record>
 
         <!-- top menu item -->
@@ -47,6 +73,7 @@
         <!-- MENU CATEGORIES -->
         <menuitem name="Game" id="menu_1" parent="menu_root" />
         <!-- action (DROPDOWN)-->
-        <menuitem name="Game Manager" id="menu_1_gamemanager" parent="menu_1" action="odootycoon.action_window" sequence="1" />
+        <menuitem name="Game Manager" id="menu_1_gamemanager" parent="menu_1" action="odootycoon.action_gamemanager" />
+        <menuitem name="Products" id="menu_1_products" parent="menu_1" action="odootycoon.action_products" />
     </data>
 </odoo>

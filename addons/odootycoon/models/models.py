@@ -2,6 +2,27 @@
 from odoo import models, fields, api
 from odoo.exceptions import UserError, ValidationError, Warning
 from random import randint 
+    
+class odootycoon_producttemplate(models.Model):
+    _name = 'product.template'
+    _inherit = 'product.template'
+
+    unlockcost = fields.Float('Unlock Cost', default=750)
+    unlocked = fields.Boolean('Unlocked', default=False)
+
+    # Button: unlockproduct 
+    def unlockproduct(self):
+        print('Unlock Product')
+        gamemanager = self.env['odootycoon.gamemanager'].search([('name', '=', 'New Game')])
+        #When your cash >= unlockcost, you can click UnlockButton. And you have to pay the unlockcost to unlock product
+        #gamemanager.cash is your money
+        #unlockcost is the money you must to pay for unlock the product
+        if gamemanager.cash >= self.unlockcost:
+            self.unlocked = True
+            gamemanager.cash -= self.unlockcost
+        else:
+            #Must import the library's name is "Warning" before use syntax below
+            raise Warning('You do not have enough money to unlock the %s product' % self.name)
 
 class odootycoon_gamemanager(models.Model):
     _name = "odootycoon.gamemanager"
@@ -11,10 +32,10 @@ class odootycoon_gamemanager(models.Model):
     day = fields.Integer("Current day", default=1)
     cash = fields.Float("Cash", default=1000)
 
-# Button: Next day
+# Button--------------------------------------------:
     def nextday(self):
         #Process Unlocked Products
-        products = self.env['product.template'].search([('unlocked','=',True)])
+        products = self.env['product.template'].search([('unlocked','=', True)])
         cash = 0
         for product in products:
             #list_price is the Sale Price of each product
