@@ -54,3 +54,9 @@ class odootycoon_gamemanager(models.Model):
         self.cash = 1000
         products = self.env['product.template'].search([('unlocked','=',True)]).write({'unlocked':False})
 
+# class odootycoon_productmanager(models.Model):
+#     _name = "odootycoon.productmanager"
+#     _description = "My Odoo Product Manager"
+
+#     productname = fields.string("Product Name")    
+#     unlockcost = fields.Float("UnlockCost")
