@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <!-- explicit list view definition -->
+        <!-- explicit list view definition (game manager)-->
         <record id="odootycoon_gamemanager_view" model="ir.ui.view">
             <field name="name">Odootycoon Game Manager View</field>
             <field name="model">odootycoon.gamemanager</field>
-            <field name="arch" type="xml">
+            <field name="arch" type="xml">                
                 <tree default_order="create_date desc">
                     <field name="name" />
                     <field name="cash" />
@@ -13,14 +13,25 @@
                 </tree>
             </field>
         </record>
-
-        <!-- explicit list view definition (productmanager)-->
-         <!-- <record id="odootycoon_productmanager_view" model="ir.ui.view">
+         <!-- explicit list view definition (productmanager)-->
+         <record id="odootycoon_productmanager_view" model="ir.ui.view">
             <field name="name">Odootycoon ProductManager View</field>
             <field name="model">odootycoon.productmanager</field>
             <field name="arch" type="xml">
                 <tree default_order="create_date desc">
-                    <field name="productname" />
+                    <field name="name" string="Product Name"/>
+                    <field name="unlockcost" />
+                    <field name="list_price" string="Price" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- explicit list view definition (unlockcostmanager)-->
+        <!-- <record id="odootycoon_unlockcostmanager_view" model="ir.ui.view">
+            <field name="name">Odootycoon UnlockCost Manager View</field>
+            <field name="model">odootycoon.unlockcostmanager</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
                     <field name="unlockcost" />
                 </tree>
             </field>
@@ -37,11 +48,19 @@
                         <button name="skip5days" string="Skip 5 Days" type="object" />
                         <button name="skip30days" string="Skip 30 Days" type="object" />
                         <button name="resetgame" string="Reset Game" type="object" />
+                        <!-- <button name="unlockproduct" string="Unlock Product" type="object" attrs="{'invisible': [('unlocked', '=', True)]}" /> -->
+                        <button name="unlockproduct" string="unlock" type="object" />
                     </header>
                     <group>
                         <field name="name" />
                         <field name="cash" />
                         <field name="day" />
+                        <field name="income" />
+                    </group>
+                    <group>
+                        <field name="my_product_id" />
+                        <field name="unlockcost" />
+                        <field name="list_price" />
                     </group>
                 </form>
             </field>
@@ -54,6 +73,14 @@
             <field name="inherit_id" ref="product.product_template_only_form_view" />
             <field name="arch" type="xml">
                 <!-- create new page inside the original page  -->
+                <!-- TEST -->
+                <!-- <field name="sale_ok" position="after">
+                    <button name="test" string="test" type="object" />
+                </field>
+                <xpath expr="//field[@name='purchase_ok']" position="after">
+                    <button name="test" string="test" type="object" />
+                </xpath>          -->
+                <!-- /TEST -->
                 <notebook position="inside">
                     <page string="Odoo Tycoon">
                         <group>
@@ -68,19 +95,47 @@
         </record>
 
         <!-- explicit form view definition (form of product manager)-->
+        <record id="odootycoon_productmanager_form" model="ir.ui.view">
+            <field name="name">Odoo Tycoon Product Manager Form</field>
+            <field name="model">odootycoon.productmanager</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="my_product_id" />
+                        <field name="unlockcost" />    
+                        <field name="list_price" />                 
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- explicit form view definition (form of unlockcost manager)-->
         <!-- <record id="odootycoon_productmanager_form" model="ir.ui.view">
             <field name="name">Odoo Tycoon Product Manager Form</field>
             <field name="model">odootycoon.productmanager</field>
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="productname" />
                         <field name="unlockcost" />                     
                     </group>
                 </form>
             </field>
         </record> -->
-
+        <!-- TEST -->
+        <!-- <record id="odootycoon_producttemplate_form_02" model="ir.ui.view">
+            <field name="name">Odoo Tycoon Product</field>
+            <field name="model">sale.order</field>
+            
+            <field name="inherit_id" ref="sale.view_quotation_tree" />
+            <field name="arch" type="xml">
+                
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="sale_description" />
+                </xpath>                             
+                
+            </field>
+        </record> -->
+        <!-- /TEST -->
         <!-- action opening view on models (gamemanager) -->
         <record id="action_gamemanager" model="ir.actions.act_window">
             <field name="name">Odoo Tycoon Game Manager</field>
@@ -93,13 +148,23 @@
             <field name="res_model">product.template</field>
             <field name="view_mode">kanban,tree,form</field>
         </record>
-        <!-- action opening view on models (productmanager) -->
-        <!-- <record id="action_productmanager" model="ir.actions.act_window">
+
+        <!-- action opening view on models (product manager) -->
+        <record id="action_productmanager" model="ir.actions.act_window">
             <field name="name">Odoo Tycoon Product Manager</field>
             <field name="res_model">odootycoon.productmanager</field>
             <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- action opening view on models (unlockcost manager) -->
+        <!-- <record id="action_unlockcostmanager" model="ir.actions.act_window">
+            <field name="name">Odoo Tycoon UnlockCost Manager</field>
+            <field name="res_model">odootycoon.unlockcostmanager</field>
+            <field name="view_mode">tree,form</field>
         </record> -->
 
+
+        
         <!-- top menu item -->
         <menuitem name="Odoo Tycoon" id="menu_root" />
         <!-- MENU CATEGORIES -->
@@ -107,6 +172,7 @@
         <!-- action (DROPDOWN)-->
         <menuitem name="Game Manager" id="menu_1_gamemanager" parent="menu_1" action="odootycoon.action_gamemanager" />
         <menuitem name="Products" id="menu_1_products" parent="menu_1" action="odootycoon.action_products" />
-         <!-- <menuitem name="Product Cost" id="menu_1_productmanager" parent="menu_1" action="odootycoon.action_productmanager" /> -->
+        <menuitem name="Product Manager" id="menu_1_productmanager" parent="menu_1" action="odootycoon.action_productmanager" />
+        <!-- <menuitem name="UnlockCost Manager" id="menu_1_unlockcostmanager" parent="menu_1" action="odootycoon.action_unlockcostmanager" /> -->
     </data>
 </odoo>

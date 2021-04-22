@@ -2,7 +2,7 @@ version: '3'
 services:
 
   odoo: # the odoo web app
-    container_name: my_odoo14
+    container_name: my_odoo
     build: 
       context: .
       dockerfile: ./Dockerfile
@@ -13,7 +13,7 @@ services:
       - USER=odoo
       - PASSWORD=odoo
     ports: 
-      - "10015:8069"
+      - "80:8069"
     volumes: 
       - ./addons:/mnt/extra-addons
       - ./etc:/etc/odoo
@@ -21,7 +21,7 @@ services:
 
   postgres_db:
     image: postgres:12
-    container_name: my_postgres12
+    container_name: postgres_db
     environment:
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo
