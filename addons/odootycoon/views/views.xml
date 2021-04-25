@@ -48,8 +48,9 @@
                         <button name="skip5days" string="Skip 5 Days" type="object" />
                         <button name="skip30days" string="Skip 30 Days" type="object" />
                         <button name="resetgame" string="Reset Game" type="object" />
-                        <!-- <button name="unlockproduct" string="Unlock Product" type="object" attrs="{'invisible': [('unlocked', '=', True)]}" /> -->
-                        <button name="unlockproduct" string="unlock" type="object" />
+                        <field name="unlocked" attrs="{'invisible': [('unlocked', '=', False)]}" />
+                        <button name="unlockproduct" string="Unlock Product" type="object" attrs="{'invisible': [('unlocked', '=', True)]}" />
+                        <!-- <button name="unlockproduct" string="unlock" type="object" /> -->
                     </header>
                     <group>
                         <field name="name" />
@@ -59,8 +60,8 @@
                     </group>
                     <group>
                         <field name="my_product_id" />
-                        <field name="unlockcost" />
-                        <field name="list_price" />
+                        <field name="unlockcost" readonly="1"/>
+                        <field name="list_price" readonly="1"/>
                     </group>
                 </form>
             </field>

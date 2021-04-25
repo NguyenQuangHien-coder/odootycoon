@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+        <record id="odootycoon.menu_1_gamemanager" model="ir.ui.menu">
+            <field name="name">Game Manager</field>
+        </record>
+    </data>
+</odoo>

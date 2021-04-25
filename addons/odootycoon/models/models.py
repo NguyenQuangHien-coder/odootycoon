@@ -43,12 +43,14 @@ class odootycoon_gamemanager(models.Model):
     my_product_id = fields.Many2one(
         'product.template', 'My Product',
         auto_join=True, index=True, ondelete="cascade", required=True)
-    # unlocked = fields.Boolean(default=False)
+    unlocked = fields.Boolean('Unlocked', default=False)
 
     name = fields.Char("Game Name", default="New Game")
     day = fields.Integer("Current day", default=1)
     cash = fields.Float("Cash", default=1000)
     income = fields.Float("Your Income", default=0)
+   
+    
 
 # Button--------------------------------------------:
     def nextday(self):
@@ -72,10 +74,13 @@ class odootycoon_gamemanager(models.Model):
         self.cash = 1000
         self.income = 0
         products = self.env['product.template'].search([('unlocked','=',True)]).write({'unlocked':False})
+        self.unlocked = False
     def unlockproduct(self):
         odoo_product = self.env['product.template'].search([('name', '=', 'Product')])
         if self.cash >= odoo_product.unlockcost:
-            products = self.env['product.template'].search([('unlocked','=',False)]).write({'unlocked':True})
+            # products = self.env['product.template'].search([('unlocked','=',False)]).write({'unlocked':True})
+            odoo_product.unlocked = True
+            self.unlocked = True
             self.cash -= odoo_product.unlockcost
         else:
             raise Warning('Not Enough Money')
